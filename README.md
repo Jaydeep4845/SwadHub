@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# SwadHub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack food ordering web app built with the MERN stack (MongoDB, Express, React, Node.js).
+Users sign up, browse dishes by category, add items to a cart, place orders and see their order history.
 
-## Available Scripts
+> Learning project from 2023, built while learning full-stack JavaScript. It is not maintained.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Sign up and log in with hashed passwords (bcrypt) and JWT-based sessions
+- Input validation on the API with `express-validator`
+- Menu loaded from MongoDB, grouped by food category, with search
+- Cart managed with React Context and `useReducer`
+- Order placement and "My Orders" history stored per user
+- Location lookup from coordinates during sign-up
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Architecture
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```mermaid
+flowchart LR
+    UI[React app<br/>localhost:3000] -- REST / JSON --> API[Express API<br/>localhost:5000]
+    API --> DB[(MongoDB Atlas<br/>users, food_items, Categories, orders)]
+```
 
-### `npm test`
+## API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Method | Route | Purpose |
+|---|---|---|
+| POST | `/api/auth/createuser` | Register a user (password hashed with bcrypt) |
+| POST | `/api/auth/login` | Log in and receive a JWT |
+| POST | `/api/auth/getuser` | Get the current user (JWT required) |
+| POST | `/api/auth/getlocation` | Resolve an address from coordinates |
+| POST | `/api/auth/foodData` | Menu items and categories |
+| POST | `/api/auth/orderData` | Save an order |
+| POST | `/api/auth/myOrderData` | A user's order history |
 
-### `npm run build`
+## Running locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# backend
+cd backend
+cp .env.example .env      # add your MongoDB URI and a JWT secret
+npm install
+node index.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# frontend (new terminal, repo root)
+npm install
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech stack
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+React 18, React Router, React Bootstrap, Node.js, Express, Mongoose, MongoDB Atlas, bcryptjs, JSON Web Tokens.
